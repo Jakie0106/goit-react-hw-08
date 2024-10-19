@@ -22,7 +22,7 @@ const slice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })

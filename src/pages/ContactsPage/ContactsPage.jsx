@@ -1,12 +1,16 @@
 import ContactForm from "../../components/ContactForm/ContactForm";
-import SearchBox from "../../components/SearchBox/SearchBox";
+
 import ContactList from "../../components/ContactList/ContactList";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectError, selectLoading } from "../../redux/contacts/selectors";
+import {
+  selectError,
+  selectFilteredContacts,
+  selectLoading,
+} from "../../redux/contacts/selectors";
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -15,15 +19,23 @@ const ContactsPage = () => {
   }, [dispatch]);
   const isLoading = useSelector(selectLoading);
   const isError = useSelector(selectError);
+  const filteredContacts = useSelector(selectFilteredContacts);
 
   return (
-    <div className="mainContainer">
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
+    <div className="items-center">
+      <div className="w-full flex justify-center gap-10 px-5 py-6 items-center">
+        <h1>Phonebook</h1>
+        <ContactForm />
+      </div>
+
       {isLoading && <h2>Loading...</h2>}
       {isError && <h2>Error...</h2>}
-      <ContactList />
+
+      {filteredContacts.length > 0 ? (
+        <ContactList />
+      ) : (
+        <h3>No contacts available</h3>
+      )}
     </div>
   );
 };

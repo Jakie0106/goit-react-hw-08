@@ -1,16 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/auth/operations";
-import { selectUser } from "../../redux/auth/selectors";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
+import SearchBox from "../SearchBox/SearchBox";
+import toast from "react-hot-toast";
 
 const UserMenu = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log(user);
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .then(() => {
+        toast.success(`Bye ${user.name}`);
+      })
+      .catch(() => {
+        toast.error("Failed");
+      });
+  };
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <div>
-      <p>Welcome, {user.name}!</p>
-      <button onClick={() => dispatch(logout())} type="button">
+    <div className="flex items-center gap-4 space-x-10">
+      <SearchBox />
+      {isLoggedIn && <p className="text-xl">Welcome, {user.name}!</p>}
+      <button onClick={handleLogout} type="button">
         Logout
       </button>
     </div>

@@ -1,11 +1,9 @@
 .list {
   display: flex;
   flex-direction: column;
-  border: 2px solid lightseagreen;
-  border-radius: 12px;
   padding: 24px;
   gap: 12px;
-  width: 300px;
+  width: 100%;
 }
 
 .item {

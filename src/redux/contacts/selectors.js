@@ -8,8 +8,13 @@ export const selectError = (state) => state.contact.contacts.error;
 export const selectFilteredContacts = createSelector(
   [selectContact, selectNameFilter],
   (contacts, filter) => {
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim())
+    return contacts.filter(
+      (contact) =>
+        contact.name
+          .toLowerCase()
+          .trim()
+          .includes(filter.toLowerCase().trim()) ||
+        contact.number.includes(filter)
     );
   }
 );
